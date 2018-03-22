@@ -17,7 +17,9 @@ namespace FormInterface.controller
             // extract the form 
             HTMLParser.extractFormFromXML();
             // render XML to GUI
-            HTMLParser.writeTheFormular();
+            HTMLParser.fillFormToDataCollection();
+            // render XML to GUI
+            HTMLParser.renderFormDataCollection();
         }
 
         public void sendPostRequest()
