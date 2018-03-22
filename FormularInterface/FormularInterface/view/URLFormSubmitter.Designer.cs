@@ -33,7 +33,7 @@ namespace FormInterface.view
         {
             UrlImput = new System.Windows.Forms.TextBox();
             URLImputLabel = new System.Windows.Forms.Label();
-            XMLFormularText = new System.Windows.Forms.TextBox();
+            XMLFormularText = new System.Windows.Forms.DataGridView();
             GetURLRequest = new System.Windows.Forms.Button();
             XMLFormularLabel = new System.Windows.Forms.Label();
             SubmitURLRequest = new System.Windows.Forms.Button();
@@ -59,7 +59,6 @@ namespace FormInterface.view
             // XMLFormularText
             // 
             XMLFormularText.Location = new System.Drawing.Point(15, 95);
-            XMLFormularText.Multiline = true;
             XMLFormularText.Name = "XMLFormularText";
             XMLFormularText.Size = new System.Drawing.Size(635, 233);
             XMLFormularText.TabIndex = 2;
@@ -120,7 +119,7 @@ namespace FormInterface.view
 
         public static TextBox UrlImput;
         public static Label URLImputLabel;
-        public static TextBox XMLFormularText;
+        public static DataGridView XMLFormularText;
         public static Button GetURLRequest;
         public static Label XMLFormularLabel;
         public static Button SubmitURLRequest;

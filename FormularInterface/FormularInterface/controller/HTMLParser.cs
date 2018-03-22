@@ -50,16 +50,16 @@ namespace FormInterface.controller
                     FormularData actualFormularData = new FormularData(iFormNr, sFormAction, "", "", "");
                     HtmlDocData.FormExtractedData.Add(iKey, actualFormularData);
       
-                    foreach (HtmlAgilityPack.HtmlNode InputNode in HtmlFormNode.SelectNodes("//input"))
+                    foreach (HtmlAgilityPack.HtmlNode InputNode in HtmlFormNode.SelectNodes(".//input"))
                     {
                         ++iKey;
                         string sInputType = "", sInputName = "", sInputValue = "";
-                        if (HtmlFormNode.Attributes["type"] != null)
-                           sInputType = HtmlFormNode.Attributes["type"].Value;
-                        if (HtmlFormNode.Attributes["name"] != null)
-                            sInputName = HtmlFormNode.Attributes["name"].Value;
-                        if (HtmlFormNode.Attributes["value"] != null)
-                            sInputValue = HtmlFormNode.Attributes["value"].Value;
+                        if (InputNode.Attributes["type"] != null)
+                           sInputType = InputNode.Attributes["type"].Value;
+                        if (InputNode.Attributes["name"] != null)
+                            sInputName = InputNode.Attributes["name"].Value;
+                        if (InputNode.Attributes["value"] != null)
+                            sInputValue = InputNode.Attributes["value"].Value;
                         FormularData actualInputData = new FormularData(iFormNr, "", sInputType, sInputName, sInputValue);
                         HtmlDocData.FormExtractedData.Add(iKey, actualInputData);
                     }
@@ -74,15 +74,24 @@ namespace FormInterface.controller
 
         public static void renderFormDataCollection()
         {
+
+            view.URLFormSubmitter.XMLFormularText.Columns.Add("Key", "key");
+            view.URLFormSubmitter.XMLFormularText.Columns.Add("Form", "form");
+            view.URLFormSubmitter.XMLFormularText.Columns.Add("Action", "action");
+            view.URLFormSubmitter.XMLFormularText.Columns.Add("Type", "type");
+            view.URLFormSubmitter.XMLFormularText.Columns.Add("Name", "name");
+            view.URLFormSubmitter.XMLFormularText.Columns.Add("Value", "value");
+
             foreach (var item in HtmlDocData.FormExtractedData)
             {
-                Console.Write(item.Key);
-                Console.Write(item.Value.form);
-                Console.Write(item.Value.action);
-                string output = item.Value.name + " " + item.Value.value;
-                view.URLFormSubmitter.XMLFormularText.Text = output;
+                view.URLFormSubmitter.XMLFormularText.Rows.Add(item.Key, 
+                                                                item.Value.form,
+                                                                item.Value.action,
+                                                                item.Value.type,
+                                                                item.Value.name,
+                                                                item.Value.value);
             }
-
+          
         }   
 
 
