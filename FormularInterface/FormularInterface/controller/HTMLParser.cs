@@ -9,6 +9,15 @@ namespace FormInterface.controller
     sealed class HTMLParser
     {
 
+        public static void clear()
+        {
+            HtmlDocData.HtmlCode = "";
+            HtmlDocData.HtmlDoc = null;
+            HtmlDocData.HtmlFormCollection = null;
+            HtmlDocData.FormExtractedData.Clear();
+            view.URLFormSubmitter.XMLFormularText.Rows.Clear();
+        }
+
         public static void readTheUrl()
         { 
            HtmlDocData.url = view.URLFormSubmitter.UrlImput.Text;
@@ -49,8 +58,8 @@ namespace FormInterface.controller
                     string sFormAction = HtmlFormNode.Attributes["action"].Value;
                     FormularData actualFormularData = new FormularData(iFormNr, sFormAction, "", "", "");
                     HtmlDocData.FormExtractedData.Add(iKey, actualFormularData);
-      
-                    foreach (HtmlAgilityPack.HtmlNode InputNode in HtmlFormNode.SelectNodes(".//input"))
+
+                    foreach (HtmlAgilityPack.HtmlNode InputNode in HtmlFormNode.SelectNodes("//input"))
                     {
                         ++iKey;
                         string sInputType = "", sInputName = "", sInputValue = "";

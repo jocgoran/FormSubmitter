@@ -8,6 +8,8 @@ namespace FormInterface.controller
 
         public static void ButtonURLGetRequest()
         {
+            // clear the data
+            HTMLParser.clear();
             // read the url
             HTMLParser.readTheUrl(); 
             // get HTML Code

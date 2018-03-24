@@ -8,7 +8,7 @@ namespace FormInterface.controller
 
         internal static void BuildHeader()
         {
-            URLRequest.RequestHeader = "a";
+            URLRequest.HttpWebRequest.Method = "POST";
         }
 
         public static void BuildFormular()
