@@ -23,11 +23,45 @@ namespace FormInterface.controller
            HtmlDocData.url = view.URLFormSubmitter.UrlImput.Text;
         }
 
-        public static void setPageSourceCode()
+        public static void setPageSourceCodeAndCookies()
         {
+            //Create a request
+            URLRequest.HttpRequest = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            //Create a Cookies Container
+            URLRequest.HttpRequest.CookieContainer = new CookieContainer();
+
+            // Add Collection from previous Page
+            URLRequest.HttpRequest.CookieContainer.Add(URLRequest.cookiesCollection);
+
+            //Get the response from the server
+            HttpWebResponse response = (HttpWebResponse)URLRequest.HttpRequest.GetResponse();
+
+            // Save the cookies from the response
+            URLRequest.cookiesCollection = response.Cookies;
+
+             // Print the properties of each cookie.
+            foreach (Cookie cook in response.Cookies)
+            {
+                Console.WriteLine("Cookie:");
+                Console.WriteLine("{0} = {1}", cook.Name, cook.Value);
+                Console.WriteLine("Domain: {0}", cook.Domain);
+                Console.WriteLine("Path: {0}", cook.Path);
+                Console.WriteLine("Port: {0}", cook.Port);
+                Console.WriteLine("Secure: {0}", cook.Secure);
+
+                Console.WriteLine("When issued: {0}", cook.TimeStamp);
+                Console.WriteLine("Expires: {0} (expired? {1})",
+                    cook.Expires, cook.Expired);
+                Console.WriteLine("Don't save: {0}", cook.Discard);
+                Console.WriteLine("Comment: {0}", cook.Comment);
+                Console.WriteLine("Uri for comments: {0}", cook.CommentUri);
+                Console.WriteLine("Version: RFC {0}", cook.Version == 1 ? "2109" : "2965");
+
+                // Show the string representation of the cookie.
+                Console.WriteLine("String: {0}", cook.ToString());
+            }   
+
             StreamReader sr = new StreamReader(response.GetResponseStream());
             HtmlDocData.HtmlCode = sr.ReadToEnd();
             sr.Close();

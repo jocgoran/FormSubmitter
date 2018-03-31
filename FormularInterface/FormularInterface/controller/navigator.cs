@@ -1,10 +1,16 @@
 ﻿using FormInterface.model;
+using System.Net;
 using System.Xml;
 
 namespace FormInterface.controller
 {
     class navigator
     {
+
+        public static void init()
+        {
+            URLRequest.cookiesCollection = new CookieCollection();
+        }
 
         public static void ButtonURLGetRequest()
         {
@@ -13,7 +19,7 @@ namespace FormInterface.controller
             // read the url
             HTMLParser.readTheUrl(); 
             // get HTML Code
-            HTMLParser.setPageSourceCode();
+            HTMLParser.setPageSourceCodeAndCookies();
             // Convert to XML 
             HTMLParser.convertHTMLCodeToXML();
             // extract the form 

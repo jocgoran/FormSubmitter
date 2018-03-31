@@ -8,6 +8,8 @@ namespace FormInterface.model
     class URLRequest
     {
 
-        public static HttpWebRequest HttpWebRequest { get; set; }
+        //The cookies will be here.
+        public static CookieCollection cookiesCollection { get; set; }
+        public static HttpWebRequest HttpRequest { get; set; }
     }
 }
