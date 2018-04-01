@@ -23,13 +23,13 @@ namespace FormInterface.controller
         {
             // serialize xml formular
 
-            URLRequest.RequestFormular = "b";
+            //URLRequest.RequestFormular = "b";
         }
 
-        public static void BuildURLrequest()
+        public static void BuildURLRequest()
         {
-            URLRequest.PostRequest = "c";
+            //URLRequest.PostRequest = "c";
         }
-        
+
     }
 }

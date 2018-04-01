@@ -45,7 +45,7 @@ namespace FormInterface.view
             UrlImput.Name = "UrlImput";
             UrlImput.Size = new System.Drawing.Size(554, 20);
             UrlImput.TabIndex = 0;
-            UrlImput.Text = "http://goran.joc.ch/login.php";
+            UrlImput.Text = "http://www.tio.ch";
             // 
             // URLImputLabel
             // 

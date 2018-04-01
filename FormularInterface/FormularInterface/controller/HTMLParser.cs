@@ -40,28 +40,7 @@ namespace FormInterface.controller
             // Save the cookies from the response
             URLRequest.cookiesCollection = response.Cookies;
 
-             // Print the properties of each cookie.
-            foreach (Cookie cook in response.Cookies)
-            {
-                Console.WriteLine("Cookie:");
-                Console.WriteLine("{0} = {1}", cook.Name, cook.Value);
-                Console.WriteLine("Domain: {0}", cook.Domain);
-                Console.WriteLine("Path: {0}", cook.Path);
-                Console.WriteLine("Port: {0}", cook.Port);
-                Console.WriteLine("Secure: {0}", cook.Secure);
-
-                Console.WriteLine("When issued: {0}", cook.TimeStamp);
-                Console.WriteLine("Expires: {0} (expired? {1})",
-                    cook.Expires, cook.Expired);
-                Console.WriteLine("Don't save: {0}", cook.Discard);
-                Console.WriteLine("Comment: {0}", cook.Comment);
-                Console.WriteLine("Uri for comments: {0}", cook.CommentUri);
-                Console.WriteLine("Version: RFC {0}", cook.Version == 1 ? "2109" : "2965");
-
-                // Show the string representation of the cookie.
-                Console.WriteLine("String: {0}", cook.ToString());
-            }   
-
+            // Read the remote stream
             StreamReader sr = new StreamReader(response.GetResponseStream());
             HtmlDocData.HtmlCode = sr.ReadToEnd();
             sr.Close();
@@ -93,7 +72,7 @@ namespace FormInterface.controller
                     FormularData actualFormularData = new FormularData(iFormNr, sFormAction, "", "", "");
                     HtmlDocData.FormExtractedData.Add(iKey, actualFormularData);
 
-                    foreach (HtmlAgilityPack.HtmlNode InputNode in HtmlFormNode.SelectNodes("//input"))
+                    foreach (HtmlAgilityPack.HtmlNode InputNode in HtmlFormNode.SelectNodes(".//input"))
                     {
                         ++iKey;
                         string sInputType = "", sInputName = "", sInputValue = "";
@@ -103,9 +82,10 @@ namespace FormInterface.controller
                             sInputName = InputNode.Attributes["name"].Value;
                         if (InputNode.Attributes["value"] != null)
                             sInputValue = InputNode.Attributes["value"].Value;
-                        FormularData actualInputData = new FormularData(iFormNr, "", sInputType, sInputName, sInputValue);
-                        HtmlDocData.FormExtractedData.Add(iKey, actualInputData);
+                        FormularData actualInputData1 = new FormularData(iFormNr, "", sInputType, sInputName, sInputValue);
+                        HtmlDocData.FormExtractedData.Add(iKey, actualInputData1);
                     }
+                    
                 }
             }
             catch(Exception ex)

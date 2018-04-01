@@ -14,6 +14,7 @@ namespace FormInterface.controller
 
         public static void ButtonURLGetRequest()
         {
+            init();
             // clear the data
             HTMLParser.clear();
             // read the url
@@ -37,7 +38,7 @@ namespace FormInterface.controller
             // Build the FORM
             requestParser.BuildFormular();
             // Build the request
-            requestParser.BuildURLrequest();
+            requestParser.BuildURLRequest();
             // Send the request
 
             // read the url
