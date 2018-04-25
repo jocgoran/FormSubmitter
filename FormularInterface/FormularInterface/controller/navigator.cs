@@ -18,7 +18,26 @@ namespace FormInterface.controller
             // clear the data
             HTMLParser.clear();
             // read the url
-            HTMLParser.readTheUrl(); 
+            HTMLParser.readTheUrl();
+            // Get the Request and render form 
+            getAndRenderPageData();
+        }
+
+        public static void sendPostRequest()
+        {
+            // Build the Header
+            requestParser.BuildHeader();
+            // Build the FORM
+            requestParser.BuildFormular();
+            // Build the request
+            requestParser.BuildURLRequest();
+            // Get the Request and render form
+            getAndRenderPageData();
+            
+        }
+
+        public static void getAndRenderPageData()
+        {
             // get HTML Code
             HTMLParser.setPageSourceCodeAndCookies();
             // Convert to XML 
@@ -29,20 +48,6 @@ namespace FormInterface.controller
             HTMLParser.fillFormToDataCollection();
             // render XML to GUI
             HTMLParser.renderFormDataCollection();
-        }
-
-        public void sendPostRequest()
-        {
-            // Build the Header
-            requestParser.BuildHeader();
-            // Build the FORM
-            requestParser.BuildFormular();
-            // Build the request
-            requestParser.BuildURLRequest();
-            // Send the request
-
-            // read the url
-            // read the url
         }
 
     }

@@ -20,21 +20,21 @@ namespace FormInterface.controller
 
         public static void readTheUrl()
         { 
-           HtmlDocData.url = view.URLFormSubmitter.UrlImput.Text;
+            HtmlDocData.url = view.URLFormSubmitter.UrlImput.Text;
+
+         // Create a request
+            URLRequest.HttpRequest = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
         }
 
         public static void setPageSourceCodeAndCookies()
         {
-            //Create a request
-            URLRequest.HttpRequest = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
-
             //Create a Cookies Container
             URLRequest.HttpRequest.CookieContainer = new CookieContainer();
 
             // Add Collection from previous Page
             URLRequest.HttpRequest.CookieContainer.Add(URLRequest.cookiesCollection);
 
-            //Get the response from the server
+            // Get the response from the server
             HttpWebResponse response = (HttpWebResponse)URLRequest.HttpRequest.GetResponse();
 
             // Save the cookies from the response
@@ -82,8 +82,8 @@ namespace FormInterface.controller
                             sInputName = InputNode.Attributes["name"].Value;
                         if (InputNode.Attributes["value"] != null)
                             sInputValue = InputNode.Attributes["value"].Value;
-                        FormularData actualInputData1 = new FormularData(iFormNr, "", sInputType, sInputName, sInputValue);
-                        HtmlDocData.FormExtractedData.Add(iKey, actualInputData1);
+                        FormularData actualFrmularELements = new FormularData(iFormNr, "", sInputType, sInputName, sInputValue);
+                        HtmlDocData.FormExtractedData.Add(iKey, actualFrmularELements);
                     }
                     
                 }
