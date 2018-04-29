@@ -114,7 +114,10 @@ namespace FormInterface.controller
                                                                 item.Value.name,
                                                                 item.Value.value);
             }
-          
+
+            view.URLFormSubmitter.ChoosenForm.Items.Clear();
+            view.URLFormSubmitter.ChoosenForm.DisplayMember = "Value";
+            view.URLFormSubmitter.ChoosenForm.ValueMember = "Key";
         }   
 
 

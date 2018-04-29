@@ -1,5 +1,4 @@
 ﻿using FormInterface.model;
-using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -37,6 +36,9 @@ namespace FormInterface.controller
                         {
                             view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[j].Value.ToString();
                         }
+                        catch
+                        {
+                        }
                     }
                 }
             }
@@ -67,8 +69,9 @@ namespace FormInterface.controller
                {
              // use the whole new path
                } 
-            else ()
-               { extract path until last / and add new page
+            else 
+               {
+              //  extract path until last / and add new page
                }
 
      // Create a request

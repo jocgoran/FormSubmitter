@@ -1,6 +1,4 @@
-﻿using HtmlAgilityPack;
-using System.Xml;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace FormInterface.model
 {
