@@ -1,4 +1,5 @@
 ﻿using FormInterface.model;
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -8,7 +9,9 @@ namespace FormInterface.controller
     class requestParser
     {
 
+        private static int iChoosenFormNr;
         private static string action;
+        private static string postParam;
         private static string postData;
 
         internal static void BuildHeader()
@@ -26,35 +29,34 @@ namespace FormInterface.controller
         public static void BuildFormular()
         {
             // read the form that have to be submitted  
+            iChoosenFormNr = Convert.ToInt32(view.URLFormSubmitter.ChoosenForm.SelectedItem);
+
+            // loop over each row  
             for (int i = 0; i < (view.URLFormSubmitter.XMLFormularText.Rows.Count - 1); i++)
             {
-                for (int j = 0; j < view.URLFormSubmitter.XMLFormularText.Columns.Count; j++)
+                // read only choosen form
+                if (Convert.ToInt32(view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[0].Value) == iChoosenFormNr)
                 {
-                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[j].Value.ToString() != string.Empty)
+                    // read the action
+                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value.ToString() != string.Empty)
+                        action=view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value.ToString();
+                    // read the name
+                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[3].Value.ToString() != string.Empty)
                     {
-                        try
-                        {
-                            view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[j].Value.ToString();
-                        }
-                        catch
-                        {
-                        }
+                        if (postParam.Length == 0) postParam = "?";
+                        else postParam = "&";
+                        postParam = view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value.ToString();
+                    }
+                    // read the value
+                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[3].Value.ToString() != string.Empty)
+                    { 
+                        postParam = postParam + "=" + view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value.ToString();
                     }
                 }
             }
 
 
-            foreach (var item in HtmlDocData.FormExtractedData)
-            {
-                view.URLFormSubmitter.XMLFormularText.Rows.Add(item.Key,
-                                                                item.Value.form,
-                                                                item.Value.action,
-                                                                item.Value.type,
-                                                                item.Value.name,
-                                                                item.Value.value);
-            }
-
-     //       postData = String.Format("j_username={0}&j_password={1}", username, password);
+            postData = action + postParam;
         }
 
         public static void BuildURLRequest()
@@ -74,8 +76,8 @@ namespace FormInterface.controller
               //  extract path until last / and add new page
                }
 
-     // Create a request
-                URLRequest.HttpRequest = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
+            // Create a request
+            URLRequest.HttpRequest = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
             // Get the request stream.  
             Stream dataStream = URLRequest.HttpRequest.GetRequestStream();
             // Write the data to the request stream.  

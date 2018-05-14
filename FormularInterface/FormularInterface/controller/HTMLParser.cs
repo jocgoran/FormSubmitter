@@ -60,6 +60,8 @@ namespace FormInterface.controller
 
         public static void fillFormToDataCollection()
         {
+         view.URLFormSubmitter.ChoosenForm.Items.Clear();
+
             try
             {
                 int iFormNr = 0;
@@ -68,6 +70,8 @@ namespace FormInterface.controller
                 {
                     ++iFormNr;
                     ++iKey;
+                    view.URLFormSubmitter.ChoosenForm.Items.Add(iFormNr);
+
                     string sFormAction = HtmlFormNode.Attributes["action"].Value;
                     FormularData actualFormularData = new FormularData(iFormNr, sFormAction, "", "", "");
                     HtmlDocData.FormExtractedData.Add(iKey, actualFormularData);
@@ -115,11 +119,7 @@ namespace FormInterface.controller
                                                                 item.Value.value);
             }
 
-            view.URLFormSubmitter.ChoosenForm.Items.Clear();
-            view.URLFormSubmitter.ChoosenForm.DisplayMember = "Value";
-            view.URLFormSubmitter.ChoosenForm.ValueMember = "Key";
         }   
-
 
     }
 }

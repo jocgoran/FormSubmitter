@@ -94,7 +94,6 @@ namespace FormInterface.view
             // 
             // ChoosenForm
             // 
-            ChoosenForm.Items.Add("test1");
             ChoosenForm.Location = new System.Drawing.Point(164, 339);
             ChoosenForm.Name = "ChoosenForm";
             ChoosenForm.Size = new System.Drawing.Size(60, 21);
