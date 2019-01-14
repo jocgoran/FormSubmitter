@@ -9,7 +9,7 @@ namespace FormInterface.controller
     sealed class HTMLParser
     {
 
-        public static void clear()
+        public static void Clear()
         {
             HtmlDocData.HtmlCode = "";
             HtmlDocData.HtmlDoc = null;
@@ -18,47 +18,49 @@ namespace FormInterface.controller
             view.URLFormSubmitter.XMLFormularText.Rows.Clear();
         }
 
-        public static void readTheUrl()
+        public static void ReadTheUrl()
         { 
             HtmlDocData.url = view.URLFormSubmitter.UrlImput.Text;
 
-         // Create a request
+           // Create a request
             URLRequest.HttpRequest = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
         }
 
-        public static void setPageSourceCodeAndCookies()
+        public static void SetPageSourceCodeAndCookies()
         {
-            //Create a Cookies Container
+            // Create a cookiescontainer for the response from the server
             URLRequest.HttpRequest.CookieContainer = new CookieContainer();
 
-            // Add Collection from previous Page
-            URLRequest.HttpRequest.CookieContainer.Add(URLRequest.cookiesCollection);
+            // Add Collection from previous Page -  first time an empty collection
+            URLRequest.HttpRequest.CookieContainer.Add(URLRequest.SiteCookiesCollection);
 
             // Get the response from the server
             HttpWebResponse response = (HttpWebResponse)URLRequest.HttpRequest.GetResponse();
 
-            // Save the cookies from the response
-            URLRequest.cookiesCollection = response.Cookies;
+            // Save the cookies from the response in the program collection
+            URLRequest.SiteCookiesCollection = response.Cookies;
 
             // Read the remote stream
             StreamReader sr = new StreamReader(response.GetResponseStream());
             HtmlDocData.HtmlCode = sr.ReadToEnd();
             sr.Close();
+            response.Close();
         }
 
-        public static void convertHTMLCodeToXML()
+        // usedonlyto get the DOM structure
+        public static void ConvertHTMLCodeToXML()
         {
             HtmlDocData.HtmlDoc = new HtmlAgilityPack.HtmlDocument();
             HtmlDocData.HtmlDoc.LoadHtml(HtmlDocData.HtmlCode);
         }
 
-        public static void extractFormFromXML()
+        public static void ExtractFormFromXML()
         {
             HtmlNode.ElementsFlags.Remove("form");
             HtmlDocData.HtmlFormCollection = HtmlDocData.HtmlDoc.DocumentNode.SelectNodes("//form");
         }
 
-        public static void fillFormToDataCollection()
+        public static void FillFormToDataCollection()
         {
          view.URLFormSubmitter.ChoosenForm.Items.Clear();
 
@@ -99,7 +101,7 @@ namespace FormInterface.controller
 
         }
 
-        public static void renderFormDataCollection()
+        public static void RenderFormDataCollection()
         {
 
             view.URLFormSubmitter.XMLFormularText.Columns.Add("Key", "key");

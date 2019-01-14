@@ -7,24 +7,29 @@ namespace FormInterface.controller
     class navigator
     {
 
-        public static void init()
+        public static void Init()
         {
-            URLRequest.cookiesCollection = new CookieCollection();
+            // create the URLRequest with its data
+            new URLRequest();
         }
 
+        // This is called from the button that send the URL to get the formular
         public static void ButtonURLGetRequest()
         {
-            init();
+            Init();
             // clear the data
-            HTMLParser.clear();
+            HTMLParser.Clear();
             // read the url
-            HTMLParser.readTheUrl();
+            HTMLParser.ReadTheUrl();
             // Get the Request and render form 
-            getAndRenderPageData();
+            GetAndRenderPageData();
         }
 
-        public static void sendPostRequest()
+        // This is called from the button that send the formular
+        public static void SendPostRequest()
         {
+            // Build the FORM
+            requestParser.AddCoockies();
             // Build the Header
             requestParser.BuildHeader();
             // Build the FORM
@@ -32,22 +37,22 @@ namespace FormInterface.controller
             // Build the request
             requestParser.BuildURLRequest();
             // Get the Request and render form
-            getAndRenderPageData();
+            GetAndRenderPageData();
             
         }
 
-        public static void getAndRenderPageData()
+        public static void GetAndRenderPageData()
         {
             // get HTML Code
-            HTMLParser.setPageSourceCodeAndCookies();
+            HTMLParser.SetPageSourceCodeAndCookies();
             // Convert to XML 
-            HTMLParser.convertHTMLCodeToXML();
+            HTMLParser.ConvertHTMLCodeToXML();
             // extract the form 
-            HTMLParser.extractFormFromXML();
+            HTMLParser.ExtractFormFromXML();
             // render XML to GUI
-            HTMLParser.fillFormToDataCollection();
+            HTMLParser.FillFormToDataCollection();
             // render XML to GUI
-            HTMLParser.renderFormDataCollection();
+            HTMLParser.RenderFormDataCollection();
         }
 
     }

@@ -46,7 +46,7 @@ namespace FormInterface.view
             UrlImput.Name = "UrlImput";
             UrlImput.Size = new System.Drawing.Size(554, 20);
             UrlImput.TabIndex = 0;
-            UrlImput.Text = "http://www.tio.ch";
+            UrlImput.Text = "http://pamela.joc.ch";
             // 
             // URLImputLabel
             // 
@@ -91,6 +91,7 @@ namespace FormInterface.view
             SubmitURLRequest.TabIndex = 5;
             SubmitURLRequest.Text = "Send formular\'s values";
             SubmitURLRequest.UseVisualStyleBackColor = true;
+            SubmitURLRequest.Click += new System.EventHandler(this.ButtonSubmitURLRequest_Click);
             // 
             // ChoosenForm
             // 
@@ -123,6 +124,11 @@ namespace FormInterface.view
         private void ButtonURLGetRequest_Click(object sender, EventArgs e)
         {
             FormInterface.controller.navigator.ButtonURLGetRequest();
+        }
+
+        private void ButtonSubmitURLRequest_Click(object sender, EventArgs e)
+        {
+            FormInterface.controller.navigator.SendPostRequest();
         }
 
         public static TextBox UrlImput;

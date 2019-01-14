@@ -1,6 +1,5 @@
 ﻿using FormInterface.model;
 using System;
-using System.IO;
 using System.Net;
 using System.Text;
 
@@ -13,6 +12,11 @@ namespace FormInterface.controller
         private static string action;
         private static string postParam;
         private static string postData;
+
+        internal static void AddCoockies()
+        {
+
+        }
 
         internal static void BuildHeader()
         {
@@ -35,57 +39,53 @@ namespace FormInterface.controller
             for (int i = 0; i < (view.URLFormSubmitter.XMLFormularText.Rows.Count - 1); i++)
             {
                 // read only choosen form
-                if (Convert.ToInt32(view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[0].Value) == iChoosenFormNr)
+                if (Convert.ToInt32(view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value) == iChoosenFormNr)
                 {
                     // read the action
-                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value.ToString() != string.Empty)
-                        action=view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value.ToString();
+                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[2].Value.ToString() != string.Empty)
+                        action=view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[2].Value.ToString();
                     // read the name
-                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[3].Value.ToString() != string.Empty)
+                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[4].Value.ToString() != string.Empty)
                     {
-                        if (postParam.Length == 0) postParam = "?";
+                        if (postParam == null) postParam = "?";
                         else postParam = "&";
-                        postParam = view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value.ToString();
+                        postParam = postParam + view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[4].Value.ToString();
                     }
                     // read the value
-                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[3].Value.ToString() != string.Empty)
+                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[5].Value.ToString() != string.Empty)
                     { 
-                        postParam = postParam + "=" + view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value.ToString();
+                        postParam = postParam + "=" + view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[5].Value.ToString();
                     }
+                postData = postData + postParam;
                 }
             }
-
-
-            postData = action + postParam;
+         
         }
 
         public static void BuildURLRequest()
         {
-
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 
             // Set the ContentLength property of the WebRequest.  
-            URLRequest.HttpRequest.ContentLength = byteArray.Length;
+            //URLRequest.HttpRequest.ContentLength = byteArray.Length;
+
             // Create the URL 
-            if ("http" == HtmlDocData.url.Substring(0, 4))
+            if ("http" == action.Substring(0, 4))
                {
-             // use the whole new path
+                // use the whole new path
+                HtmlDocData.url = action;
                } 
             else 
                {
-              //  extract path until last / and add new page
+                //  extract path until last / and add new page
+                HtmlDocData.url = HtmlDocData.url + action;
                }
+
+            // Build the URI together
+            HtmlDocData.url = HtmlDocData.url + postData;
 
             // Create a request
             URLRequest.HttpRequest = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
-            // Get the request stream.  
-            Stream dataStream = URLRequest.HttpRequest.GetRequestStream();
-            // Write the data to the request stream.  
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            // Close the Stream object.  
-            dataStream.Close();
-
-
         }
 
     }

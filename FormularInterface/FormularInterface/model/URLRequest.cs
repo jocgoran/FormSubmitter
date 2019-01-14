@@ -9,7 +9,13 @@ namespace FormInterface.model
     {
 
         //The cookies will be here.
-        public static CookieCollection cookiesCollection { get; set; }
+        public static CookieCollection SiteCookiesCollection { get; set; }
         public static HttpWebRequest HttpRequest { get; set; }
+
+        public URLRequest()
+        {
+            // Create a cookiescontainer for maintaining local data
+            URLRequest.SiteCookiesCollection = new CookieCollection();
+        }
     }
 }
