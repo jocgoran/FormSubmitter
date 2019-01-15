@@ -15,7 +15,10 @@ namespace FormInterface.controller
             HtmlDocData.HtmlDoc = null;
             HtmlDocData.HtmlFormCollection = null;
             HtmlDocData.FormExtractedData.Clear();
+            // clear DataGrid with form data 
             view.URLFormSubmitter.XMLFormularText.Rows.Clear();
+            // clear drop down menu of choosen form
+            view.URLFormSubmitter.ChoosenForm.Items.Clear();
         }
 
         public static void ReadTheUrl()
@@ -62,8 +65,6 @@ namespace FormInterface.controller
 
         public static void FillFormToDataCollection()
         {
-         view.URLFormSubmitter.ChoosenForm.Items.Clear();
-
             try
             {
                 int iFormNr = 0;

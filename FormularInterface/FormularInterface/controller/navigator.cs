@@ -17,8 +17,6 @@ namespace FormInterface.controller
         public static void ButtonURLGetRequest()
         {
             Init();
-            // clear the data
-            HTMLParser.Clear();
             // read the url
             HTMLParser.ReadTheUrl();
             // Get the Request and render form 
@@ -28,8 +26,6 @@ namespace FormInterface.controller
         // This is called from the button that send the formular
         public static void SendPostRequest()
         {
-            // Build the FORM
-            requestParser.AddCoockies();
             // Build the Header
             requestParser.BuildHeader();
             // Build the FORM
@@ -43,6 +39,8 @@ namespace FormInterface.controller
 
         public static void GetAndRenderPageData()
         {
+            // clear the data
+            HTMLParser.Clear();
             // get HTML Code
             HTMLParser.SetPageSourceCodeAndCookies();
             // Convert to XML 

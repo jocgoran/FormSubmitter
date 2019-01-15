@@ -11,12 +11,6 @@ namespace FormInterface.controller
         private static int iChoosenFormNr;
         private static string action;
         private static string postParam;
-        private static string postData;
-
-        internal static void AddCoockies()
-        {
-
-        }
 
         internal static void BuildHeader()
         {
@@ -32,6 +26,9 @@ namespace FormInterface.controller
 
         public static void BuildFormular()
         {
+            // reset the param list
+            postParam = "?";
+
             // read the form that have to be submitted  
             iChoosenFormNr = Convert.ToInt32(view.URLFormSubmitter.ChoosenForm.SelectedItem);
 
@@ -44,27 +41,35 @@ namespace FormInterface.controller
                     // read the action
                     if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[2].Value.ToString() != string.Empty)
                         action=view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[2].Value.ToString();
-                    // read the name
-                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[4].Value.ToString() != string.Empty)
-                    {
-                        if (postParam == null) postParam = "?";
-                        else postParam = "&";
-                        postParam = postParam + view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[4].Value.ToString();
-                    }
-                    // read the value
-                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[5].Value.ToString() != string.Empty)
+
+                    // handle only certain field types
+                    string FieldType = view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[3].Value.ToString();
+                    switch (FieldType.ToLower())
                     { 
-                        postParam = postParam + "=" + view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[5].Value.ToString();
-                    }
-                postData = postData + postParam;
-                }
-            }
-         
+                        case "text":
+                        case "checkbox":
+                        {
+                            // read the name
+                            if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[4].Value.ToString() != string.Empty)
+                            {
+                                if (postParam.Length > 1) postParam += "&";
+                                postParam += view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[4].Value.ToString();
+                            }
+                            // read the value
+                            if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[5].Value.ToString() != string.Empty)
+                            {
+                                postParam += "=" + view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[5].Value.ToString();
+                            }
+                        break;
+                        }  // end case
+                    } //endswitch
+                } //end handling ofchoosen form
+            } //End loop    
         }
 
         public static void BuildURLRequest()
         {
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            byte[] byteArray = Encoding.UTF8.GetBytes(postParam);
 
             // Set the ContentLength property of the WebRequest.  
             //URLRequest.HttpRequest.ContentLength = byteArray.Length;
@@ -82,7 +87,7 @@ namespace FormInterface.controller
                }
 
             // Build the URI together
-            HtmlDocData.url = HtmlDocData.url + postData;
+            HtmlDocData.url = HtmlDocData.url + postParam;
 
             // Create a request
             URLRequest.HttpRequest = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
