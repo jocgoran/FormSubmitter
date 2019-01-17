@@ -50,7 +50,7 @@ namespace FormInterface.controller
             response.Close();
         }
 
-        // usedonlyto get the DOM structure
+        // used only to get the DOM structure
         public static void ConvertHTMLCodeToXML()
         {
             HtmlDocData.HtmlDoc = new HtmlAgilityPack.HtmlDocument();
@@ -67,8 +67,11 @@ namespace FormInterface.controller
         {
             try
             {
+                // initialize metadata of DataGrid
                 int iFormNr = 0;
                 int iKey = 0;
+
+                // loop over the HTML form element to extract the input fields
                 foreach (HtmlAgilityPack.HtmlNode HtmlFormNode in HtmlDocData.HtmlFormCollection)
                 {
                     ++iFormNr;
@@ -79,6 +82,7 @@ namespace FormInterface.controller
                     FormularData actualFormularData = new FormularData(iFormNr, sFormAction, "", "", "");
                     HtmlDocData.FormExtractedData.Add(iKey, actualFormularData);
 
+                    // extract data from the input tag
                     foreach (HtmlAgilityPack.HtmlNode InputNode in HtmlFormNode.SelectNodes(".//input"))
                     {
                         ++iKey;
@@ -89,8 +93,10 @@ namespace FormInterface.controller
                             sInputName = InputNode.Attributes["name"].Value;
                         if (InputNode.Attributes["value"] != null)
                             sInputValue = InputNode.Attributes["value"].Value;
-                        FormularData actualFrmularELements = new FormularData(iFormNr, "", sInputType, sInputName, sInputValue);
-                        HtmlDocData.FormExtractedData.Add(iKey, actualFrmularELements);
+                        //for each row create a new element to contain input node's values
+                        FormularData actualFormularElements = new FormularData(iFormNr, "", sInputType, sInputName, sInputValue);
+                        // add pair key - input values
+                        HtmlDocData.FormExtractedData.Add(iKey, actualFormularElements);
                     }
                     
                 }
@@ -104,14 +110,7 @@ namespace FormInterface.controller
 
         public static void RenderFormDataCollection()
         {
-
-            view.URLFormSubmitter.XMLFormularText.Columns.Add("Key", "key");
-            view.URLFormSubmitter.XMLFormularText.Columns.Add("Form", "form");
-            view.URLFormSubmitter.XMLFormularText.Columns.Add("Action", "action");
-            view.URLFormSubmitter.XMLFormularText.Columns.Add("Type", "type");
-            view.URLFormSubmitter.XMLFormularText.Columns.Add("Name", "name");
-            view.URLFormSubmitter.XMLFormularText.Columns.Add("Value", "value");
-
+            // this add the items extracted from the form to the DataGrid
             foreach (var item in HtmlDocData.FormExtractedData)
             {
                 view.URLFormSubmitter.XMLFormularText.Rows.Add(item.Key, 

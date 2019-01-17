@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace FormInterface.controller
 {
-    class navigator
+    class Navigator
     {
 
         public static void Init()

@@ -63,6 +63,15 @@ namespace FormInterface.view
             XMLFormularText.Name = "XMLFormularText";
             XMLFormularText.Size = new System.Drawing.Size(635, 233);
             XMLFormularText.TabIndex = 2;
+            //
+            // Column of FormularText can be added hardcoded
+            //
+            XMLFormularText.Columns.Add("Key", "key");
+            XMLFormularText.Columns.Add("Form", "form");
+            XMLFormularText.Columns.Add("Action", "action");
+            XMLFormularText.Columns.Add("Type", "type");
+            XMLFormularText.Columns.Add("Name", "name");
+            XMLFormularText.Columns.Add("Value", "value");
             // 
             // GetURLRequest
             // 
@@ -119,16 +128,18 @@ namespace FormInterface.view
             this.ResumeLayout(false);
             this.PerformLayout();
 
+
+
         }
 
         private void ButtonURLGetRequest_Click(object sender, EventArgs e)
         {
-            FormInterface.controller.navigator.ButtonURLGetRequest();
+            FormInterface.controller.Navigator.ButtonURLGetRequest();
         }
 
         private void ButtonSubmitURLRequest_Click(object sender, EventArgs e)
         {
-            FormInterface.controller.navigator.SendPostRequest();
+            FormInterface.controller.Navigator.SendPostRequest();
         }
 
         public static TextBox UrlImput;
