@@ -41,10 +41,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controller\DataRenderer.cs" />
     <Compile Include="controller\HTMLParser.cs" />
-    <Compile Include="controller\navigator.cs" />
+    <Compile Include="controller\Navigator.cs" />
     <Compile Include="controller\requestParser.cs" />
-    <Compile Include="main.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="model\formular.cs" />
     <Compile Include="model\URLRequest.cs" />
     <Compile Include="view\URLFormSubmitter.cs">

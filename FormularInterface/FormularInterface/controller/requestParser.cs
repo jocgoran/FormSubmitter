@@ -22,6 +22,11 @@ namespace FormInterface.controller
             URLRequest.HttpRequest.ProtocolVersion = HttpVersion.Version11;
             URLRequest.HttpRequest.AllowAutoRedirect = false;
             URLRequest.HttpRequest.ContentType = "application/x-www-form-urlencoded";
+            //some other request informations
+            URLRequest.HttpRequest.MaximumAutomaticRedirections = 50;
+            URLRequest.HttpRequest.AllowAutoRedirect = true;
+            URLRequest.HttpRequest.KeepAlive = true;
+            //URLRequest.HttpRequest.ContentLength = 0;
         }
 
         public static void BuildFormular()

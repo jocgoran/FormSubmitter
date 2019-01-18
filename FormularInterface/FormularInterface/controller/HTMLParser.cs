@@ -43,6 +43,9 @@ namespace FormInterface.controller
             // Save the cookies from the response in the program collection
             URLRequest.SiteCookiesCollection = response.Cookies;
 
+            // check if is logged in
+            var isInvalidAccess = response.StatusCode == HttpStatusCode.Unauthorized;
+
             // Read the remote stream
             StreamReader sr = new StreamReader(response.GetResponseStream());
             HtmlDocData.HtmlCode = sr.ReadToEnd();

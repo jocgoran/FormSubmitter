@@ -20,7 +20,7 @@ namespace FormInterface.model
         public string action { get; set; }
         public string type { get; set; }
         public string name { get; set; }
-        public string value { get; set; }
+        public string value { get; set; }        
         public FormularData (int form, string action, string type, string name, string value)
         {
             this.form = form;

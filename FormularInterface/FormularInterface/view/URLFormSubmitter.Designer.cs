@@ -37,8 +37,15 @@ namespace FormInterface.view
             XMLFormularLabel = new System.Windows.Forms.Label();
             SubmitURLRequest = new System.Windows.Forms.Button();
             ChoosenForm = new System.Windows.Forms.ComboBox();
+            CookiesOutput = new System.Windows.Forms.RichTextBox();
+            dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(XMLFormularText)).BeginInit();
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // UrlImput
             // 
@@ -55,23 +62,21 @@ namespace FormInterface.view
             URLImputLabel.Size = new System.Drawing.Size(152, 20);
             URLImputLabel.TabIndex = 1;
             URLImputLabel.Text = "write the URL of formular";
-            URLImputLabel.Click += new System.EventHandler(this.lbl_Click);
+            URLImputLabel.Click += new System.EventHandler(lbl_Click);
             // 
             // XMLFormularText
             // 
+            XMLFormularText.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            dataGridViewTextBoxColumn1,
+            dataGridViewTextBoxColumn2,
+            dataGridViewTextBoxColumn3,
+            dataGridViewTextBoxColumn4,
+            dataGridViewTextBoxColumn5,
+            dataGridViewTextBoxColumn6});
             XMLFormularText.Location = new System.Drawing.Point(15, 95);
             XMLFormularText.Name = "XMLFormularText";
             XMLFormularText.Size = new System.Drawing.Size(635, 233);
             XMLFormularText.TabIndex = 2;
-            //
-            // Column of FormularText can be added hardcoded
-            //
-            XMLFormularText.Columns.Add("Key", "key");
-            XMLFormularText.Columns.Add("Form", "form");
-            XMLFormularText.Columns.Add("Action", "action");
-            XMLFormularText.Columns.Add("Type", "type");
-            XMLFormularText.Columns.Add("Name", "name");
-            XMLFormularText.Columns.Add("Value", "value");
             // 
             // GetURLRequest
             // 
@@ -81,7 +86,7 @@ namespace FormInterface.view
             GetURLRequest.TabIndex = 3;
             GetURLRequest.Text = "Get request";
             GetURLRequest.UseVisualStyleBackColor = true;
-            GetURLRequest.Click += new System.EventHandler(this.ButtonURLGetRequest_Click);
+            GetURLRequest.Click += new System.EventHandler(ButtonURLGetRequest_Click);
             // 
             // XMLFormularLabel
             // 
@@ -100,7 +105,7 @@ namespace FormInterface.view
             SubmitURLRequest.TabIndex = 5;
             SubmitURLRequest.Text = "Send formular\'s values";
             SubmitURLRequest.UseVisualStyleBackColor = true;
-            SubmitURLRequest.Click += new System.EventHandler(this.ButtonSubmitURLRequest_Click);
+            SubmitURLRequest.Click += new System.EventHandler(ButtonSubmitURLRequest_Click);
             // 
             // ChoosenForm
             // 
@@ -109,26 +114,64 @@ namespace FormInterface.view
             ChoosenForm.Size = new System.Drawing.Size(60, 21);
             ChoosenForm.TabIndex = 6;
             // 
+            // CookiesOutput
+            // 
+            CookiesOutput.Location = new System.Drawing.Point(372, 340);
+            CookiesOutput.Multiline = true;
+            CookiesOutput.Name = "CookiesOutput";
+            CookiesOutput.Size = new System.Drawing.Size(278, 161);
+            CookiesOutput.TabIndex = 7;
+            CookiesOutput.Text = "Cookies Output";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.HeaderText = "key";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.HeaderText = "form";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.HeaderText = "action";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "type";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.HeaderText = "name";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.HeaderText = "value";
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
             // URLFormSubmitter
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(662, 368);
-            this.Controls.Add(ChoosenForm);
-            this.Controls.Add(SubmitURLRequest);
-            this.Controls.Add(XMLFormularLabel);
-            this.Controls.Add(GetURLRequest);
-            this.Controls.Add(XMLFormularText);
-            this.Controls.Add(UrlImput);
-            this.Controls.Add(URLImputLabel);
-            this.Name = "URLFormSubmitter";
-            this.Text = "URL form submitter";
-            this.Load += new System.EventHandler(this.URLFormSubmitter_Load);
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(662, 517);
+            Controls.Add(CookiesOutput);
+            Controls.Add(ChoosenForm);
+            Controls.Add(SubmitURLRequest);
+            Controls.Add(XMLFormularLabel);
+            Controls.Add(GetURLRequest);
+            Controls.Add(XMLFormularText);
+            Controls.Add(UrlImput);
+            Controls.Add(URLImputLabel);
+            Name = "URLFormSubmitter";
+            Text = "URL form submitter";
+            Load += new System.EventHandler(URLFormSubmitter_Load);
             ((System.ComponentModel.ISupportInitialize)(XMLFormularText)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
-
 
         }
 
@@ -142,6 +185,12 @@ namespace FormInterface.view
             FormInterface.controller.Navigator.SendPostRequest();
         }
 
+        private static DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private static DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private static DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private static DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private static DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private static DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         public static TextBox UrlImput;
         public static Label URLImputLabel;
         public static DataGridView XMLFormularText;
@@ -149,5 +198,6 @@ namespace FormInterface.view
         public static Label XMLFormularLabel;
         public static Button SubmitURLRequest;
         public static ComboBox ChoosenForm;
+        public static RichTextBox CookiesOutput;
     }
 }

@@ -43,6 +43,10 @@ namespace FormInterface.controller
             HTMLParser.Clear();
             // get HTML Code
             HTMLParser.SetPageSourceCodeAndCookies();
+            //render cookies to GUI
+            DataRenderer.WriteCookiesToGUI();
+            //renderURL to GUI
+            DataRenderer.WriteURLToGUI();
             // Convert to XML 
             HTMLParser.ConvertHTMLCodeToXML();
             // extract the form 
