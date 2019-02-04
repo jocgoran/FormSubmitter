@@ -14,13 +14,10 @@ namespace FormInterface.controller
 
         internal static void BuildHeader()
         {
-            URLRequest.HttpRequest.Method = "POST";
-
             URLRequest.HttpRequest.Method = WebRequestMethods.Http.Post;
             URLRequest.HttpRequest.UserAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
             URLRequest.HttpRequest.AllowWriteStreamBuffering = false;
             URLRequest.HttpRequest.ProtocolVersion = HttpVersion.Version11;
-            URLRequest.HttpRequest.AllowAutoRedirect = false;
             URLRequest.HttpRequest.ContentType = "application/x-www-form-urlencoded";
             //some other request informations
             URLRequest.HttpRequest.MaximumAutomaticRedirections = 50;
@@ -44,24 +41,27 @@ namespace FormInterface.controller
                 if (Convert.ToInt32(view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[1].Value) == iChoosenFormNr)
                 {
                     // read the action
-                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[2].Value.ToString() != string.Empty)
-                        action=view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[2].Value.ToString();
+                    if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[2].Value != null)
+                        {
+                        action =view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[2].Value.ToString();
+                        }
 
                     // handle only certain field types
                     string FieldType = view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[3].Value.ToString();
                     switch (FieldType.ToLower())
                     { 
                         case "text":
+                        case "password":
                         case "checkbox":
                         {
                             // read the name
-                            if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[4].Value.ToString() != string.Empty)
+                            if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[4].Value != null)
                             {
                                 if (postParam.Length > 1) postParam += "&";
                                 postParam += view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[4].Value.ToString();
                             }
                             // read the value
-                            if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[5].Value.ToString() != string.Empty)
+                            if (view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[5].Value != null)
                             {
                                 postParam += "=" + view.URLFormSubmitter.XMLFormularText.Rows[i].Cells[5].Value.ToString();
                             }
@@ -74,13 +74,14 @@ namespace FormInterface.controller
 
         public static void BuildURLRequest()
         {
-            byte[] byteArray = Encoding.UTF8.GetBytes(postParam);
+            byte[] bytes = Encoding.ASCII.GetBytes(postParam);
 
             // Set the ContentLength property of the WebRequest.  
-            //URLRequest.HttpRequest.ContentLength = byteArray.Length;
+            //URLRequest.HttpRequest.ContentLength = bytes.Length;
 
             // Create the URL 
-            if ("http" == action.Substring(0, 4))
+            int found = action.IndexOf("http");
+            if (found == 0)
                {
                 // use the whole new path
                 HtmlDocData.url = action;

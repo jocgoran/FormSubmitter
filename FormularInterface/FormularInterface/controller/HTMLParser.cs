@@ -27,6 +27,9 @@ namespace FormInterface.controller
 
            // Create a request
             URLRequest.HttpRequest = (HttpWebRequest)WebRequest.Create(HtmlDocData.url);
+            URLRequest.HttpRequest.AllowAutoRedirect = true;
+            URLRequest.HttpRequest.KeepAlive = true;
+            URLRequest.HttpRequest.ContentType = "application/x-www-form-urlencoded";
         }
 
         public static void SetPageSourceCodeAndCookies()
@@ -37,14 +40,19 @@ namespace FormInterface.controller
             // Add Collection from previous Page -  first time an empty collection
             URLRequest.HttpRequest.CookieContainer.Add(URLRequest.SiteCookiesCollection);
 
+            URLRequest.HttpRequest.Headers.Add("Cookie", URLRequest.CookieHeader);
+
             // Get the response from the server
             HttpWebResponse response = (HttpWebResponse)URLRequest.HttpRequest.GetResponse();
+
+            URLRequest.CookieHeader = response.Headers["Set-cookie"];
 
             // Save the cookies from the response in the program collection
             URLRequest.SiteCookiesCollection = response.Cookies;
 
             // check if is logged in
-            var isInvalidAccess = response.StatusCode == HttpStatusCode.Unauthorized;
+            //URLRequest.IsLoggedIn = response.StatusCode == HttpStatusCode.Unauthorized;
+           
 
             // Read the remote stream
             StreamReader sr = new StreamReader(response.GetResponseStream());

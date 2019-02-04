@@ -10,6 +10,7 @@ namespace FormInterface.controller
         {
             view.URLFormSubmitter.CookiesOutput.Text = "Content of the Cookies\r\n";
             view.URLFormSubmitter.CookiesOutput.AppendText("--------------------\r\n");
+            view.URLFormSubmitter.CookiesOutput.AppendText(URLRequest.CookieHeader +"\r\n");
             foreach (Cookie cookie in URLRequest.SiteCookiesCollection)
             {
                 view.URLFormSubmitter.CookiesOutput.AppendText(cookie.Name + ": " + cookie.Value + "\r\n");
@@ -19,7 +20,7 @@ namespace FormInterface.controller
                 view.URLFormSubmitter.CookiesOutput.AppendText("Secure: " + cookie.Secure + "\r\n");
                 view.URLFormSubmitter.CookiesOutput.AppendText("\r\n");
                 view.URLFormSubmitter.CookiesOutput.AppendText("When issued: " + cookie.TimeStamp + "\r\n");
-                view.URLFormSubmitter.CookiesOutput.AppendText("Expires: " + cookie.Expires + " (expired? " + cookie.Expired + "\r\n");
+                view.URLFormSubmitter.CookiesOutput.AppendText("Expires: " + cookie.Expires + " (expired? " + cookie.Expired + ")\r\n");
                 view.URLFormSubmitter.CookiesOutput.AppendText("Don't save: " + cookie.Discard + "\r\n");
                 view.URLFormSubmitter.CookiesOutput.AppendText("Comment: " + cookie.Comment + "\r\n");
                 view.URLFormSubmitter.CookiesOutput.AppendText("Uri for comments: " + cookie.CommentUri + "\r\n");
